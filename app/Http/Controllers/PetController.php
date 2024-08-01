@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class PetController extends Controller
+class PetController
 {
     public function __construct(
         private PetApiServiceInterface $petApiService
@@ -34,26 +34,42 @@ class PetController extends Controller
         return redirect()->route('pets.index')->with('success', 'Pet created successfully.');
     }
 
-    public function show($id): View
+    public function show(int $id): View|RedirectResponse
     {
+        if (!$this->petApiService->petExists($id)) {
+            return redirect()->route('pets.index')->with('error', 'Pet not found. It may have been removed.');
+        }
+
         $pet = $this->petApiService->getPet($id);
         return view('pets.show', compact('pet'));
     }
 
-    public function edit($id): View
+    public function edit(int $id): View|RedirectResponse
     {
+        if (!$this->petApiService->petExists($id)) {
+            return redirect()->route('pets.index')->with('error', 'Pet not found. It may have been removed.');
+        }
+
         $pet = $this->petApiService->getPet($id);
         return view('pets.edit', compact('pet'));
     }
 
-    public function update(PetRequest $request, $id): RedirectResponse
+    public function update(PetRequest $request, int $id): RedirectResponse
     {
+        if (!$this->petApiService->petExists($id)) {
+            return redirect()->route('pets.index')->with('error', 'Pet not found. It may have been removed.');
+        }
+
         $this->petApiService->updatePet($id, $request->validated());
         return redirect()->route('pets.show', $id)->with('success', 'Pet updated successfully.');
     }
 
-    public function destroy($id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
+        if (!$this->petApiService->petExists($id)) {
+            return redirect()->route('pets.index')->with('error', 'Pet not found. It may have already been removed.');
+        }
+
         $this->petApiService->deletePet($id);
         return redirect()->route('pets.index')->with('success', 'Pet deleted successfully.');
     }

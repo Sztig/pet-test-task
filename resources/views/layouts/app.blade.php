@@ -24,10 +24,16 @@
     </div>
 @endif
 
+@if(session('error'))
+    <div class="error">
+        {{ session('error') }}
+    </div>
+@endif
+
 @yield('content')
 
 <footer>
-    <p>&copy; {{ date('Y') }} Pet Store</p>
+    <p>Pet Store</p>
 </footer>
 </body>
 </html>

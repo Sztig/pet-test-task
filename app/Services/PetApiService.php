@@ -22,6 +22,15 @@ class PetApiService implements PetApiServiceInterface
         ];
     }
 
+    public function petExists(int $id): bool
+    {
+        try {
+            return Http::withHeaders($this->getHeaders())->get($this->apiUrl . $id)->successful();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
     private function handleApiCall(callable $apiCall): array
     {
         try {
