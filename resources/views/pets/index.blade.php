@@ -21,7 +21,7 @@
         <ul>
             @foreach($pets as $pet)
                 <li>
-                    {{ $pet['name'] ?? 'Unnamed' }} ({{ $pet['status'] ?? 'Unknown' }})
+                    {{ $pet['name'] ?? 'Unnamed' }}
                     <a href="{{ route('pets.show', $pet['id']) }}">View</a>
                     <a href="{{ route('pets.edit', $pet['id']) }}">Edit</a>
                     <form action="{{ route('pets.destroy', $pet['id']) }}" method="POST" style="display: inline;">
