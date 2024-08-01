@@ -4,6 +4,7 @@ namespace App\Services;
 
 interface PetApiServiceInterface
 {
+    public function petExists(int $id): bool;
     public function getAllPets(): array;
     public function getPet(int $id): array;
     public function createPet(array $data): array;
