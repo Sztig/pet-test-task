@@ -14,7 +14,7 @@ class PetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:40',
             'status' => 'required|in:available,pending,sold',
         ];
     }
@@ -23,7 +23,7 @@ class PetRequest extends FormRequest
     {
         return [
             'name.required' => 'The pet name is required.',
-            'name.max' => 'The pet name may not be greater than 255 characters.',
+            'name.max' => 'The pet name may not be greater than 40 characters.',
             'status.required' => 'The pet status is required.',
             'status.in' => 'The pet status must be either available, pending, or sold.',
         ];
